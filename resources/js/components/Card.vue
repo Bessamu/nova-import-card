@@ -22,19 +22,35 @@
                     </span>
 
                 </div>
-
                 <div class="flex">
-                    <div v-if="errors">
-                        <p class="text-danger mb-1" v-for="error in errors">{{error[0]}}</p>
+                    <div>
+                        <a href="/files/imports/example.csv"
+                           class="btn btn-default btn-primary bg-60"
+                           download
+                        >Скачать пример таблицы</a>
+                    </div>
+                    <div class="ml-auto">
+                        <div class="mt-2">
+                            <label for="is_update">Обновлять существующие продукты?</label>
+                            <input type="checkbox"
+                                   class="checkbox ml-1"
+                                   id="is_update"
+                                   :checked="isUpdate"
+                                   @click="isUpdate = !isUpdate"
+                            />
+                        </div>
                     </div>
                     <button
                         :disabled="working"
                         type="submit"
-                        class="btn btn-default btn-primary ml-auto mt-auto"
+                        class="btn btn-default btn-primary mt-auto ml-4"
                     >
                         <loader v-if="working" width="30"></loader>
-                        <span v-else>{{__('Import')}}</span>
+                        <span v-else>Импортировать</span>
                     </button>
+                </div>
+                <div v-if="errors">
+                    <p class="text-danger mb-1" v-for="error in errors">{{error[0]}}</p>
                 </div>
             </form>
         </div>
@@ -52,6 +68,7 @@ export default {
             label: this.__('no file selected'),
             working: false,
             errors: null,
+            isUpdate: true
         };
     },
 
@@ -73,6 +90,7 @@ export default {
             this.working = true;
             let formData = new FormData();
             formData.append('file', this.file);
+            formData.append('isUpdate', this.isUpdate)
             Nova.request()
                 .post(
                     '/nova-vendor/sparclex/nova-import-card/endpoint/' + this.card.resource,
