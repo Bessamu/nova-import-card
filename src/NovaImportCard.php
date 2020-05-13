@@ -23,6 +23,7 @@ class NovaImportCard extends Card
             ],
             'resourceLabel' => $resource::label(),
             'resource' => $resource::uriKey(),
+            'examplePath' => '/files/imports/examples/' . $resource::uriKey() . '.csv'
         ]);
     }
 

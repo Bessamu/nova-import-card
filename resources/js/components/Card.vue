@@ -23,13 +23,13 @@
 
                 </div>
                 <div class="flex">
-                    <div>
-                        <a href="/files/imports/example.csv"
+                    <div v-if="this.card.examplePath">
+                        <a :href="this.card.examplePath"
                            class="btn btn-default btn-primary bg-60"
                            download
                         >Скачать пример таблицы</a>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ml-auto" v-if="this.card.resource === 'product-resources'">
                         <div class="mt-2">
                             <label for="is_update">Обновлять существующие продукты?</label>
                             <input type="checkbox"
@@ -43,7 +43,7 @@
                     <button
                         :disabled="working"
                         type="submit"
-                        class="btn btn-default btn-primary mt-auto ml-4"
+                        class="btn btn-default btn-primary mt-auto ml-auto"
                     >
                         <loader v-if="working" width="30"></loader>
                         <span v-else>Импортировать</span>
